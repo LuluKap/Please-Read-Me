@@ -82,19 +82,27 @@ const questions = () => {
 
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
     // use fs to write file, path
-
-    // activity 13
+function writeToFile(data) {
+    fs.writeFile("README.md", data, function(err) {
+        if (err) throw err;
+        console.log("Successfully wrote to README.md");
+    });
 }
 
 // TODO: Create a function to initialize app
+// inside of writeToFile - file name, call your generateMarkdown function and pass in the responses that you got
 function init() {
-    // use inquirer and prompt user for input, take in responses, then write the responses to te file
-
-    // activity 20
-
-    // inside of writeToFile - file name, call your generateMarkdown function and pass in the responses that you got
+    questions()
+        .then(input => {
+            return generateMarkdown(input);
+        })
+        .then(data => {
+            writeToFile(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 // Function call to initialize app
